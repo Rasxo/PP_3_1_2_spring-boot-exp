@@ -1,0 +1,40 @@
+<!DOCTYPE html>
+<html xmlns="http://www.w3.org/1999/xhtml" xmlns:th="http://www.thymeleaf.org" lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>Список пользователей</title>
+</head>
+<body>
+    <h2>Список пользователей</h2>
+        <hr>
+        <br>
+<div>
+    <table>
+        <thead>
+            <tr>
+                <th>Имя</th>
+                <th>Фамилия</th>
+                <th>E-mail</th>
+                <th>Изменение</th>
+                <th>Удаление</th>
+            </tr>
+        </thead>
+        <tbody>
+            <!--/*@thymesVar id="users" type=""*/-->
+            <tr th:each="user : ${users}">
+                <td><span th:text="${user.firstName}"></span></td>
+                <td><span th:text="${user.lastName}"></span></td>
+                <td><span th:text="${user.email}"></span></td>
+                <td><button th:data-url="@{/update(id=${user.getId()})}"
+                            onclick="document.location=this.getAttribute('data-url')">Изменить</button></td>
+                <td><button th:data-url="@{/delete(id=${user.getId()})}"
+                            onclick="document.location=this.getAttribute('data-url')">Удалить</button></td>
+        </tr>
+        </tbody>
+    </table>
+    <hr>
+    <br>
+        <input type="button" value="Добавить" onclick="window.location.href = 'create'">
+</div>
+</body>
+</html>
