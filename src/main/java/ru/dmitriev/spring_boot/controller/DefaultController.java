@@ -1,6 +1,5 @@
 package ru.dmitriev.spring_boot.controller;
 
-import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.ModelMap;
 import org.springframework.web.bind.annotation.GetMapping;
@@ -12,16 +11,15 @@ import ru.dmitriev.spring_boot.service.UserService;
 
 @Controller
 public class DefaultController {
-    private UserService userService;
+    private final UserService userService;
 
-    @Autowired
-    public void setUserService(UserService userService) {
+    public DefaultController(UserService userService) {
         this.userService = userService;
     }
 
     @GetMapping(value = "/")
     public String printAllUsers(ModelMap model) {
-        model.addAttribute("users", userService.getAllUsers());
+        model.addAttribute("users", userService.findAll());
         return "index";
     }
 
@@ -36,26 +34,26 @@ public class DefaultController {
                           @RequestParam("lastName") String lastName,
                           @RequestParam("email") String string) {
 
-        userService.addUser(new User(firstName, lastName, string));
+        userService.save(new User(firstName, lastName, string));
         return "redirect:/";
     }
 
     @GetMapping("update")
     public String updateUser(@RequestParam("id") Long id, ModelMap model) {
-        User user = userService.getUserById(id);
+        User user = userService.findById(id);
         model.addAttribute("user", user);
         return "update";
     }
 
     @PostMapping("update")
     public String addUser(@ModelAttribute("user") User user, @RequestParam("id") Long id) {
-        userService.updateUser(id, user);
+        userService.update(id, user);
         return "redirect:/";
     }
 
     @GetMapping(value = "delete")
     public String deleteUser(@RequestParam(name = "id") Long id) {
-        userService.deleteUser(id);
+        userService.deleteById(id);
         return "redirect:/";
     }
 }
