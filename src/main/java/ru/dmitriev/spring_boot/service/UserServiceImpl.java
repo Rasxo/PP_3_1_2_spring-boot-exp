@@ -4,7 +4,6 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 import ru.dmitriev.spring_boot.dao.UserDao;
-import ru.dmitriev.spring_boot.dao.UserDaoImpl;
 import ru.dmitriev.spring_boot.model.User;
 
 import java.util.List;
